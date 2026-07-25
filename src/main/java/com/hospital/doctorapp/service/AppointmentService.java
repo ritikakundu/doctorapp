@@ -37,6 +37,16 @@ public class AppointmentService {
     // Save a new appointment
     public String saveAppointment(AppointmentForm appointmentForm) {
         Appointment appointment = new ModelMapper().map(appointmentForm, Appointment.class);
+        String specialty = switch (appointmentForm.getSymptoms().toLowerCase()) {
+            case "fever", "cough" -> "General Physician";
+            case "chest pain" -> "Cardiologist";
+            case "skin rash" -> "Dermatologist";
+            case "sugar" -> "Endocrinologist";
+            case "bones" -> "Orthopedic";
+            case "gastric" -> "Gastroenterologist";
+            default -> "General Physician"; // Your fallback default
+        };
+        appointment.setSpecialization(specialty);
         appointment.setStatus("CONFIRMED");
         appointmentRepository.save(appointment);
         return "Saved successfully!";
@@ -78,7 +88,7 @@ public class AppointmentService {
         return allAppointmentsByDoctor;
     }
 
-    
+
 
     // Delete appointment by id
     public List<AppointmentForm> deleteAppointment(String patientName, String patientEmail) {

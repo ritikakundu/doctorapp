@@ -7,6 +7,7 @@ import com.hospital.doctorapp.model.DeletePatientResponse;
 import com.hospital.doctorapp.model.PatientDetails;
 import com.hospital.doctorapp.service.AppointmentService;
 import com.hospital.doctorapp.service.DoctorService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,9 @@ public class AppointmentController {
     @PostMapping("/book-appointment")
     public ResponseEntity<String> saveAppointment(@RequestBody AppointmentForm appointmentForm) {
         String response = appointmentService.saveAppointment(appointmentForm);
+        if (StringUtils.isNotEmpty(response) && response.equals("Saved successfully!")){
+            //ToDo: Send email
+        }
         return ResponseEntity.ok(response);
     }
 

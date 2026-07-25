@@ -18,8 +18,6 @@ public class AppointmentForm {
 
     private String doctorName;
 
-    private String specialization;
-
     private LocalDate appointmentDate;
 
     private LocalTime appointmentTime;
